@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>
+		TAMZ 1 Template with local files
+	</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta charset="utf-8">
+	<link rel="stylesheet" href="css/onsenui.css">
+	<link rel="stylesheet" href="css/onsen-css-components.min.css">
+	<script src="js/onsenui.js"></script>
+	<script src="js/jquery.js"></script>
+	<script > 
+		function update_totals()
+		{
+			let l = document.getElementById("total_l").value;
+			document.getElementById("total").textContent= l + "l";
+		}
+
+		function final_calc()
+		{
+			document.getElementById("final_cena").value = (localStorage.price_l * localStorage.total_l).toFixed(2);
+		}
+		
+		function save_it()
+		{
+
+			localStorage.spz = document.getElementById("spz").value;
+			console.log(localStorage.spz)
+
+			localStorage.km = document.getElementById("km").value;
+			console.log(localStorage.km)
+
+			localStorage.price_l = document.getElementById("price_l").value;
+			console.log(localStorage.price_l)
+
+			localStorage.total_l = document.getElementById("total_l").value;
+			console.log(localStorage.total_l)
+
+			localStorage.datum_nakupu = document.getElementById("datum_nakupu").value;
+			console.log(localStorage.datum_nakupu)
+
+
+			localStorage.benzin = document.querySelector('input[name="benzin"]:checked').value;
+			console.log(localStorage.benzin)
+
+			localStorage.karta = document.getElementById("karta").checked;
+			console.log(localStorage.karta)
+
+			final_calc()
+		}
+
+		function load_it()
+		{
+			document.getElementById("spz").value = localStorage.spz;
+			document.getElementById("km").value = localStorage.km;
+			document.getElementById("price_l").value = localStorage.price_l;
+			document.getElementById("total_l").value = localStorage.total_l;
+			document.getElementById("datum_nakupu").value = localStorage.datum_nakupu;
+    		update_totals();
+			document.querySelector('input[name="benzin"][value="' + localStorage.benzin + '"]').checked = true;
+			if (localStorage.getItem('karta') === 'true') {
+				document.getElementById("karta").checked = true;
+			}
+			else
+			{
+				document.getElementById("karta").checked = false;
+			}
+			final_calc()
+
+		}
+
+	</script>  
+</head>
+<body>
+	
+    <ons-page id="page1_html">
+	<ons-toolbar>
+	</ons-toolbar>
+		<ons-card>
+			<ons-list>
+				<ons-list-item>
+					<label class="left"> SPZ </label><ons-input class="center" input-id="spz" type="text"></ons-input> 	
+				</ons-list-item>
+				<ons-list-item>
+					<label class="left" >Celkem&nbsp;</label>
+					<ons-input class="center" input-id="km" type="number" min="0" step="1"></ons-input>
+					<label class="right"> km</label> 
+				</ons-list-item>
+
+				<ons-list-item>
+					<label class="left" >Cena&nbsp;</label>
+					<ons-input class="center" input-id="price_l" type="number" min="0" step="0.1" value="36"></ons-input>
+					<label class="right"> Kč/l</label> 
+				</ons-list-item>
+
+
+				<ons-list-item>
+					<label class="left" >Tankováno&nbsp;</label>
+					<ons-range class="center" input-id="total_l" type="number" min="0" step="0.1" max="80" value="40" onchange="update_totals()"></ons-range>
+					<label class="right" id="total" > l</label> 
+				</ons-list-item>
+
+				<ons-list-item>
+					<label class="left">Datum nákupu&nbsp;</label>
+					<input class="center" type="date" id="datum_nakupu">
+				  </ons-list-item>
+				  <ons-list-item>
+					<label class="left"> Finální cena&nbsp;</label>
+					<input class="center" type="number" id="final_cena" value="" readonly="true">
+				  </ons-list-item>
+				  <ons-list-item>
+				<label class="left"> Typ Benzinu&nbsp;</label>
+				<label>
+					<ons-radio input-id="b_ba95" name="benzin" value="ba95">
+
+					</ons-radio>
+					BA95
+				</label>	&nbsp;
+				<label>
+					<ons-radio input-id="b_ba98" name="benzin" value="ba98">
+
+					</ons-radio>
+					BA98
+				</label>
+				<label>
+					<ons-radio input-id="b_ba100" name="benzin" value="ba100">
+
+					</ons-radio>
+					BA100
+				</label>
+				
+
+
+					</ons-list-item>
+				<ons-list-item>
+					<label class="left" >
+					<ons-checkbox class="center" input-id="karta" ></ons-checkbox>
+					
+					&nbsp;Kartou
+				</label> 
+				</ons-list-item>
+			</div>
+				
+				<ons-button class="left" input-id="vlozit" onclick="save_it()">Vložit</ons-button>
+				<ons-button class="center" input-id="nahrat" onclick="load_it()">Nahrát</ons-button>
+			</ons-list>
+		</ons-card>
+	
+
+	</ons-page>
+
+</body>
+</html>
